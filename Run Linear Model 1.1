@@ -1,0 +1,20 @@
+import pandas as pd
+
+# Load the new data from the 'predictions.xlsx' file
+new_data = pd.read_excel('predictions.xlsx')
+
+# Assuming you have a trained linear regression model named 'model'
+# and 'features' list matching the features used during training
+X_new = new_data[features]  # Adjust feature columns as needed
+
+# Use the trained model to make predictions on the new data
+predicted_time_in_step = model.predict(X_new)
+
+# Add the predicted values as a new column 'Predicted Time in Step'
+new_data['Predicted Time in Step'] = predicted_time_in_step
+
+# Save the updated data with predictions to a new Excel file
+output_file = 'predictions_with_predictions.xlsx'
+new_data.to_excel(output_file, index=False)
+
+print(f"Predicted Time in Step has been added to the new data and saved to {output_file}")
