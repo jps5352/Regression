@@ -1,0 +1,16 @@
+import pandas as pd
+
+# Read data from the Excel file
+excel_file = 'Regression.xlsx'
+df = pd.read_excel(excel_file)
+
+# Convert categorical columns to numerical features
+# You can use techniques like one-hot encoding or label encoding here
+# In this example, we'll use pandas' get_dummies for one-hot encoding
+df_encoded = pd.get_dummies(df, columns=['Business Process Name', 'Company'])
+
+# Export the modified data to a new Excel file
+output_file = 'Regression_Features.xlsx'
+df_encoded.to_excel(output_file, index=False)
+
+print(f"Data has been processed and saved to {output_file}")
