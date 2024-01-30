@@ -1,0 +1,44 @@
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+import numpy as np
+
+# Load the data from the 'Linear' file
+data = pd.read_excel('Linear.xlsx')
+
+# Select columns for one-hot encoding
+columns_to_encode = ['Business Process', 'Step', 'Reason', 'Division', 'Grade', 'IS Manager', 'Approval #']
+
+# Apply one-hot encoding using LabelEncoder
+label_encoder = LabelEncoder()
+for column in columns_to_encode:
+    data[column] = label_encoder.fit_transform(data[column])
+
+# Define features and target variable
+features = ['Business Process', 'Step', 'Reason', 'Division', 'Grade', 'IS Manager', 'Approval #',
+            'Length of Service at Completion Date']
+X = data[features]
+y = data['Time in Step']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and train a linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Make predictions on the test set
+y_pred = model.predict(X_test)
+
+# Calculate regression metrics
+mae = mean_absolute_error(y_test, y_pred)
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+
+print(f'Mean Absolute Error (MAE): {mae:.2f}')
+print(f'Root Mean Squared Error (RMSE): {rmse:.2f}')
+print(f'R-squared (R2) Score: {r2:.2f}')
+
+
