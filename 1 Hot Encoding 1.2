@@ -1,0 +1,24 @@
+import pandas as pd
+import os
+from sklearn.preprocessing import LabelEncoder
+
+# Set the 'Python' folder as the default folder
+python_folder = os.path.expanduser("~/Desktop/Python")
+os.chdir(python_folder)
+
+# Read data from the Excel file
+excel_file = 'Regression.xlsx'
+df = pd.read_excel(excel_file)
+
+# Convert 'Business Process Name' and 'Company' columns into numerical features using Label Encoding
+label_encoder = LabelEncoder()
+df['Business Process Name'] = label_encoder.fit_transform(df['Business Process Name'])
+df['Company'] = label_encoder.fit_transform(df['Company'])
+
+# Specify the desktop folder and the output file name
+output_file = 'Regression_Features.xlsx'
+
+# Export the modified data to the new Excel file
+df.to_excel(output_file, index=False)
+
+print(f"Data has been processed and saved to {output_file}")
