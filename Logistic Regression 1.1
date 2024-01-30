@@ -1,0 +1,26 @@
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
+
+# Read data from the Excel file
+excel_file = 'Regression_Features.xlsx'
+df = pd.read_excel(excel_file)
+
+# Define features and target variable
+X = df[['Company 1H', 'Business Process Name 1H']]
+y = df['Correction by Initiator']
+
+# Split the data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Create and fit the logistic regression model
+model = LogisticRegression()
+model.fit(X_train, y_train)
+
+# Predict on the test set
+y_pred = model.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print(f"Accuracy of the Logistic Regression model: {accuracy*100:.2f}%")
