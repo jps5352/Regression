@@ -1,0 +1,21 @@
+import pandas as pd
+
+# Load the raw data from the Excel file
+raw_excel_file = 'raw.xlsx'
+raw_data = pd.read_excel(raw_excel_file)
+
+# Assuming you have a trained logistic regression model stored in 'model'
+# and you want to make predictions on the new data
+X_new = raw_data[['Company 1H', 'Business Process Name 1H']]  # Adjust feature columns as needed
+
+# Use the trained model to make predictions on the new data
+predictions = model.predict(X_new)
+
+# Add the predictions to the raw data as a new column
+raw_data['Predicted Correction'] = predictions
+
+# Save the updated data with predictions to a new Excel file
+output_file = 'raw_with_predictions.xlsx'
+raw_data.to_excel(output_file, index=False)
+
+print(f"Predictions have been added to the raw data and saved to {output_file}")
